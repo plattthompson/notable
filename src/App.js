@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Grid from '@material-ui/core/Grid';
 import Title from './components/Title.js';
 import Menu from './components/Menu.js';
 import Note from './components/Note.js';
@@ -11,10 +12,12 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className="flex">
-				<Title />
-				<Menu />
-				<Note />
+			<div>
+				<Grid>
+					<Title />
+					<Menu />
+					<Note />
+				</Grid>
 			</div>
 		);
 	}
