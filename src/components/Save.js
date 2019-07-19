@@ -4,9 +4,7 @@ class Save extends Component {
 	render() {
 		return (
 			<div className="save">
-				<button onSubmit={this.props.saveChanges} type="submit">
-					<i />
-				</button>
+				<i onClick={this.props.saveChanges} class="far fa-save fa-lg icon"></i>
 			</div>
 		)
 	}

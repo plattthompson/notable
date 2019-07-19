@@ -4,9 +4,7 @@ class Delete extends Component {
 	render() {
 		return (
 			<div className="delete">
-				<button>
-					<i />
-				</button>
+				<i class="fas fa-trash-alt fa-lg icon"></i>
 			</div>
 		)
 	}

@@ -19,7 +19,6 @@ body {
 	display: grid;
 	grid-template-columns: repeat(12, 1fr);
 	grid-template-rows: repeat(12, 1fr);
-	margin-top: 50px;
 	margin-left: 200px;
 	margin-right: 200px;
 	border-radius: 15px;
@@ -30,19 +29,22 @@ body {
 .add {
 	grid-column: 1 / 2;
 	grid-row: 1 / 2;
-	text-align: center;
+	justify-self: center;
+	align-self: center;
 }
 
 .save {
 	grid-column: 2 / 3;
 	grid-row: 1 / 2;
-	text-align: center;
+	justify-self: center;
+	align-self: center;
 }
 
 .delete {
 	grid-column: 3 / 4;
 	grid-row: 1 / 2;
-	text-align: center;
+	justify-self: center;
+	align-self: center;
 }
 
 .menu {
@@ -59,12 +61,20 @@ body {
 }
 
 .note-box {
+	box-sizing: border-box;
 	width: 100%;
 	height: 100%;
+	font-size: 16px;
 	border-bottom-right-radius: 15px;
-/*	border-radius: 15px;*/
+	border-top-right-radius: 15px;
+	padding: 10px;
 	border-style: none;
 	resize: none;
+}
+
+.note-box:focus {
+	outline-color: #5F885F;
+	transition: 0.2s;
 }
 
 .list-items {
@@ -82,17 +92,27 @@ body {
 	border-top: none;
 	border-bottom-color: #5F885F;
 	border-bottom-width: 1px;
+	cursor: pointer;
 }
 
 .title-box:focus {
 	background-color: #F0F0F0;
+	cursor: auto;
 	outline: none;
 	transition: 0.2s;
 	/*border-top-left-radius: 15px;
 	border-top-right-radius: 15px;*/
 }
 
+.icon {
+	transition: 0.2s;
+}
 
+.icon:hover {
+	/*Different pointer*/
+	color: #5F885F;
+	transition: 0.2s;
+}
 
 
 
