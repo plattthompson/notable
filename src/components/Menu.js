@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Menu extends Component {
 	render() {
 		return (
-			<h3>Here's the menu</h3>
+			<h3 className="menu">Here's the menu</h3>
 		);
 	}
 }

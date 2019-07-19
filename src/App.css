@@ -1,11 +1,67 @@
-/*body {
-	height: 100vh;
+body {
+	background-color: #FFFDF1;
 }
 
-.flex {
-	height: 100vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-}*/
+.title {
+	font-family: 'Raleway', sans-serif;
+	text-align: center;
+	/*color: #2B5CA7;*/
+	/*color: #326ac1;*/
+	/*color: #4F8958;
+	color: #488A50;
+	color: #498354;*/
+	color: #5F885F;
+	font-size: 1.5em;
+}
+
+.app-container {
+	height: 80vh;
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: repeat(5, 1fr);
+	margin-top: 50px;
+	margin-left: 200px;
+	margin-right: 200px;
+	border-radius: 15px;
+	background-color: #fff3aa;
+}
+
+.add {
+	grid-column: 1 / 2;
+	grid-row: 1 / 2;
+	text-align: center;
+}
+
+.save-note {
+	grid-column: 2 / 3;
+	grid-row: 1 / 2;
+	text-align: center;
+}
+
+.trash {
+	grid-column: 3 / 4;
+	grid-row: 1 / 2;
+	text-align: center;
+}
+
+.menu {
+	grid-column: 1 / 4;
+	grid-row: 2 / 6;
+	background-color: white;
+}
+
+.note {
+	grid-column: 4 / 13;
+	grid-row: 1 / 6;
+}
+
+.note-box {
+	width: 100%;
+	height: 100%;
+	border-radius: 15px;
+	border-style: none;
+	resize: none;
+}
+
+
+
