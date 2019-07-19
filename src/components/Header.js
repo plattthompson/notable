@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Title = () => {
+const Header = () => {
 	return (
-		<div className="title">
+		<div className="header">
 				<h1>
 					NoteWorthy
 				</h1>
@@ -10,4 +10,4 @@ const Title = () => {
 	);
 }
 
-export default Title;
+export default Header;

@@ -3,7 +3,40 @@ import React, { Component } from 'react';
 class Menu extends Component {
 	render() {
 		return (
-			<h3 className="menu">Here's the menu</h3>
+			<div className="menu">
+				<ul className="list-items">
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+					<li>
+						<input className="title-box"/>
+					</li>
+				</ul>
+			</div>
 		);
 	}
 }

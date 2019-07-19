@@ -4,8 +4,9 @@ class Add extends Component {
 	render() {
 		return (
 			<div className="add">
+				<i class="fas fa-plus-circle"></i>
 				<button>
-					<i />
+					<i class="fas fa-plus-circle"></i>
 				</button>
 			</div>
 		)

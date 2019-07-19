@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
-import Title from './components/Title.js';
+import Header from './components/Header.js';
 import Add from './components/Add.js';
-import Trash from './components/Trash.js';
-import SaveNote from './components/SaveNote.js'
+import Delete from './components/Delete.js';
+import Save from './components/Save.js'
 import Menu from './components/Menu.js';
 import Note from './components/Note.js';
 
 class App extends Component {
 	state = {
+		id: 1,
 		title: "",
 		text: ""
 	}
 
 	saveText = (event) => {
-		this.setState({ text: event.target.value });
+		this.setState({ text: event.target.value, });
 	}
 
 	newNote = () => {
@@ -32,13 +33,13 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<Title />
+				<Header />
 				<div className="app-container background">
-					<Add className="add"/>
-					<SaveNote saveChanges={this.saveChanges} className="save-note"/>
-					<Trash className="trash"/>
-					<Menu className="menu"/>
-					<Note saveText={this.saveText} className="note"/>
+					<Add />
+					<Save saveChanges={this.saveChanges} />
+					<Delete />
+					<Menu />
+					<Note saveText={this.saveText} />
 				</div>
 			</div>
 		);

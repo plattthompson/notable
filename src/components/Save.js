@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-class SaveNote extends Component {
+class Save extends Component {
 	render() {
 		return (
-			<div className="save-note">
+			<div className="save">
 				<button onSubmit={this.props.saveChanges} type="submit">
 					<i />
 				</button>
@@ -12,4 +12,4 @@ class SaveNote extends Component {
 	}
 }
 
-export default SaveNote;
+export default Save;

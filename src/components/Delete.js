@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-class Trash extends Component {
+class Delete extends Component {
 	render() {
 		return (
-			<div className="trash">
+			<div className="delete">
 				<button>
 					<i />
 				</button>
@@ -12,4 +12,4 @@ class Trash extends Component {
 	}
 }
 
-export default Trash;
+export default Delete;

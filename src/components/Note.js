@@ -4,7 +4,7 @@ class Note extends Component {
 
 	render() {
 		return (
-			<div className="note">
+			<div className="note-div">
 				<textarea 
 					value={this.value} 
 					onChange={this.props.saveText}
