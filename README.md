@@ -2,9 +2,9 @@
 
 ### Getting started
 
-<!-- To create a note, simply title it and then save it. The app will autosave every 30 seconds so you don't lose your work. -->
+Click on the plus icon to create a note. Give it a title and start typing in the text area on the right.
 
-Click the plus icon on the top left to create a note. You can then title it and write your note in the text area on the right.
+If you want to save your notes, click on the save icon. This will store your notes in a remote database for future use. Alternatively, you can delete a note using the trash icon.
 
 ### Built with:
 

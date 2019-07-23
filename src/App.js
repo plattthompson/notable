@@ -18,6 +18,7 @@ class App extends Component {
 		}
 	}
 
+	// When app loads, notes are retrieved from API and state is updated
 	componentDidMount() {
 		fetch('https://noteworthy-graphql.herokuapp.com/v1/graphql', {
 			method: 'POST',
@@ -35,6 +36,9 @@ class App extends Component {
 		.then(notes => this.setState({ allNotes: notes }))
 	}
 
+	// Autosave every two minutes
+	// setInterval(saveChanges, 2 * 60 * 5000)
+
 	renderTitles = () => {
 		let titlesToBeRendered = Object.values(this.state.allNotes).map(note => 
 			<li onClick={ (event) => this.selectNote(event) } 
@@ -42,8 +46,7 @@ class App extends Component {
 					<input onChange={ (event) => this.saveTitle(event) }
 						className="title-box"  
 						defaultValue={ note.title }
-						id={ note.id }
-					/>
+						id={ note.id } />
 			</li>
 		);
 		return titlesToBeRendered;
@@ -120,40 +123,52 @@ class App extends Component {
 	}
 
 	saveChanges = () => {
-		// Add currentNote changes to corresponding allNotes object
-		// Send state to server and update DB
-		// const query = `query: { notes { id title text } }`
+		let allNotesObjects = Object.values(this.state.allNotes);
+		let allNotesNoQuotes = JSON.stringify(allNotesObjects)
+			.replace(/"id":/g, "id:")
+			.replace(/"title":/g, "title:")
+			.replace(/"text":/g, "text:");
+		let query = `mutation {
+					  insert_notes(
+						objects: 
+						  ${allNotesNoQuotes}
+						,
+						on_conflict: {
+						  constraint: notes_pkey
+						  update_columns: [title, text]
+						}
+					  ) {
+						returning {
+						  id
+						  title
+						  text
+						}
+					  }
+					}`;
+		fetch('https://noteworthy-graphql.herokuapp.com/v1/graphql', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ query })
+		})
+		.then(res => res.json())
+		.then(res => console.log( res ))
+	}
+
+	deleteNote = () => {
+		let currentId = this.state.currentNote.id;
+		delete this.state.allNotes[currentId];
+		this.setState({ currentNote: { id: null, title: "", text: "" }});
 		fetch('https://noteworthy-graphql.herokuapp.com/v1/graphql', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				// query: `{ notes { id title text } }`
-				// query: `mutation { addRow( id: 100 title: "test" text: "test" ) }`
-				query: `mutation insert_notes {
-							insert_notes(
-								objects: [
-									{
-										id: 200
-										title: "test"
-										text: "test"
-									}
-								]
-							) {
-								returning {
-									id
-									title
-									text
-								}
-							  }
+				query: `mutation {
+							delete_notes(where: {id: {_eq: ${currentId}}}) {
+								affected_rows
+							}
 						}`
 			})
-		}).then(res => res.json()).then(res => console.log( res ))
-	}
-
-	deleteNote = () => {
-
-		// Get rid of object from state
-		// Send delete request to back-end
+		})
 	}
 
 	render() {

@@ -5,11 +5,6 @@ body {
 .header {
 	font-family: 'Raleway', sans-serif;
 	text-align: center;
-	/*color: #2B5CA7;*/
-	/*color: #326ac1;*/
-	/*color: #4F8958;
-	color: #488A50;
-	color: #498354;*/
 	color: #5F885F;
 	font-size: 1.5em;
 }
@@ -102,8 +97,6 @@ body {
 	cursor: auto;
 	outline: none;
 	transition: 0.2s;
-	/*border-top-left-radius: 15px;
-	border-top-right-radius: 15px;*/
 }
 
 .icon {
@@ -112,34 +105,76 @@ body {
 }
 
 .icon:hover {
-	/*Different pointer*/
 	color: #5F885F;
 	transition: 0.2s;
 }
 
-
-
-
-
-
-
-
-
 /*__________MEDIA QUERIES__________*/
+
+/*TABLETS*/
+
+@media only screen and (max-device-width: 1024px) and (min-device-width: 769px) {
+
+	.app-container {
+		height: 90vh;
+		grid-template-columns: repeat(8, 1fr);
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+
+	.title-box {
+		font-size: 30px;
+	}
+
+	.note-box {
+		font-size: 30px;
+	}
+
+}
+
+@media only screen and (max-device-width: 768px) and (min-device-width: 421px) {
+
+	.app-container {
+		grid-template-columns: repeat(8, 1fr);
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+
+	.title-box {
+		font-size: 25px;
+	}
+
+	.note-box {
+		font-size: 27px;
+	}
+
+}
 
 /*MOBILE DEVICES*/
 
 @media only screen and (max-device-width: 420px) and (min-device-width: 320px) {
 
-	
+	.app-container {
+		grid-template-columns: repeat(3, 1fr);
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+
+	.title-box {
+		width: 90%;
+	}
+
 }
 
 /*iPHONE 5/SE*/
 
 @media only screen and (max-device-width: 320px) {
 
+	.app-container {
+		height: 75vh;
+		grid-template-columns: repeat(3, 1fr);
+		margin-left: 5px;
+		margin-right: 5px;
+	}
 
 }
-
-
-

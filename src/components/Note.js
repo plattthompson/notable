@@ -9,8 +9,7 @@ class Note extends Component {
 					value={ this.props.renderNote } 
 					onChange={ (event) => this.props.saveTextArea(event) }
 					className="note-box" 
-					placeholder="Create a note on the left and start typing here"
-				/>
+					placeholder="Create a note on the left and start typing here" />
 			</div>
 		);
 	}
