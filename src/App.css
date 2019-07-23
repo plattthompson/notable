@@ -125,7 +125,21 @@ body {
 
 
 
+/*__________MEDIA QUERIES__________*/
 
+/*MOBILE DEVICES*/
+
+@media only screen and (max-device-width: 420px) and (min-device-width: 320px) {
+
+	
+}
+
+/*iPHONE 5/SE*/
+
+@media only screen and (max-device-width: 320px) {
+
+
+}
 
 
 

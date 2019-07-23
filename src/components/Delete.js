@@ -4,7 +4,7 @@ class Delete extends Component {
 	render() {
 		return (
 			<div className="delete">
-				<i class="fas fa-trash-alt fa-lg icon"></i>
+				<i onClick={ this.props.deleteNote } className="fas fa-trash-alt fa-lg icon"></i>
 			</div>
 		)
 	}

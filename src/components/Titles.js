@@ -5,9 +5,7 @@ class Titles extends Component {
 		return (
 			<div className="menu">
 				<ul className="list-items">
-					<li>
-						<input className="title-box"/>
-					</li>
+					{ this.props.renderTitles }
 				</ul>
 			</div>
 		);
