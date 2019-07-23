@@ -15,16 +15,6 @@ class App extends Component {
 			text: ""
 		},
 		allNotes: {
-			1: {
-				id: 1,
-				title: "Sometext",
-				text: "here is some text"
-			},
-			2: {
-				id: 2,
-				title: "Moretext",
-				text: "here is more text"
-			}
 		}
 	}
 
@@ -36,8 +26,13 @@ class App extends Component {
 				query: '{ notes { id title text } }'
 			})
 		})
-		.then(data => data.json())
-		.then(obj => console.log(obj.data.notes[0]))
+		.then(res => res.json())
+		.then(obj => obj.data.notes)
+		.then(array => array.reduce((notes, note) => {
+			notes[note.id] = note;
+			return notes;
+		}, {}))
+		.then(notes => this.setState({ allNotes: notes }))
 	}
 
 	renderTitles = () => {
@@ -127,9 +122,36 @@ class App extends Component {
 	saveChanges = () => {
 		// Add currentNote changes to corresponding allNotes object
 		// Send state to server and update DB
+		// const query = `query: { notes { id title text } }`
+		fetch('https://noteworthy-graphql.herokuapp.com/v1/graphql', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				// query: `{ notes { id title text } }`
+				// query: `mutation { addRow( id: 100 title: "test" text: "test" ) }`
+				query: `mutation insert_notes {
+							insert_notes(
+								objects: [
+									{
+										id: 200
+										title: "test"
+										text: "test"
+									}
+								]
+							) {
+								returning {
+									id
+									title
+									text
+								}
+							  }
+						}`
+			})
+		}).then(res => res.json()).then(res => console.log( res ))
 	}
 
 	deleteNote = () => {
+
 		// Get rid of object from state
 		// Send delete request to back-end
 	}
