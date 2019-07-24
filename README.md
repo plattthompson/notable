@@ -2,7 +2,7 @@
 
 ### Getting started
 
-To create a note, click on the plus icon or simply start typing in the text box. You can give it a title on the left.
+To create a note, click on the plus icon or simply press any key while in the text box and then start typing. You can give it a title on the left.
 
 If you want to save your notes, click on the save icon. This will store your notes in a remote database for future use. Your notes will also be autosaved every two minutes.
 

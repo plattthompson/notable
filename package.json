@@ -2,6 +2,7 @@
   "name": "noteworthy",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://plattthompson.github.io/noteworthy",
   "dependencies": {
     "@material-ui/icons": "^4.2.1",
     "react": "^16.8.6",

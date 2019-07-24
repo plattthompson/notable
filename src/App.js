@@ -34,15 +34,15 @@ class App extends Component {
 			return notes;
 		}, {}))
 		.then(notes => this.setState({ allNotes: notes }))
-		.catch(error => console.error(error))
+		.catch(error => console.error(error));
 
 		// Timer for autosave every two minutes
-		this.autoSave = setInterval(this.saveChanges, 2 * 60 * 1000)
+		this.autoSave = setInterval(this.saveChanges, 2 * 60 * 1000);
 	}
 
 	// Clearing autosave function in case of unmount
 	componentWillUnmount () {
-		clearInterval(this.autoSave)
+		clearInterval(this.autoSave);
 	}
 
 	// Dynamically renders titles from state
@@ -61,7 +61,7 @@ class App extends Component {
 
 	// Updates state.currentNote upon selection of title
 	selectNote = (id) => {
-		let updatedCurrentNote = this.state.allNotes[id];
+		const updatedCurrentNote = this.state.allNotes[id];
 		this.setState({ 
 			currentNote: updatedCurrentNote
 		});
@@ -75,9 +75,9 @@ class App extends Component {
 	// Saves note content to state upon change OR creates new note if a note hasn't been selected yet
 	saveTextArea = (event) => {
 		if (this.state.currentNote.id) {
-			let currentNoteId = this.state.currentNote.id;
-			let currentNoteTitle = this.state.currentNote.title;
-			let currentNoteText = event.target.value;
+			const currentNoteId = this.state.currentNote.id;
+			const currentNoteTitle = this.state.currentNote.title;
+			const currentNoteText = event.target.value;
 			this.setState(prevState => ({ 
 				currentNote: { 
 					id: currentNoteId,
@@ -100,9 +100,9 @@ class App extends Component {
 
 	// Saves note title to state upon change
 	saveTitle = (event) => {
-		let currentNoteId = this.state.currentNote.id;
-		let currentNoteTitle = event.target.value;
-		let currentText = this.state.currentNote.text;
+		const currentNoteId = this.state.currentNote.id;
+		const currentNoteTitle = event.target.value;
+		const currentText = this.state.currentNote.text;
 		this.setState(prevState => ({ 
 			currentNote: { 
 				id: currentNoteId,
@@ -124,9 +124,9 @@ class App extends Component {
 	// Unix timestamp as an ID, adds the new note to the shallow
 	// copy, and updates state with shallow copy
 	addNote = () => {
-		let getAllNotes = {...this.state.allNotes};
-		let id = Date.now();
-		let newNote = { id: id, title: "", text: "" };
+		const getAllNotes = {...this.state.allNotes};
+		const id = Date.now();
+		const newNote = { id: id, title: "", text: "" };
 		getAllNotes[id] = newNote;
 		this.setState({
 			currentNote: {
@@ -138,14 +138,17 @@ class App extends Component {
 		});
 	}
 
-	// 
+	// Creates shallow copy of state.allNotes, creates array of values
+	// from shallow copy, then uses RegEx to remove quotes from id,
+	// title, and text keys to conform to GraphQL query format. Uses
+	// an upsert to modify database.
 	saveChanges = () => {
-		let allNotesObjects = Object.values({...this.state.allNotes});
-		let allNotesNoQuotes = JSON.stringify(allNotesObjects)
+		const allNotesObjects = Object.values({...this.state.allNotes});
+		const allNotesNoQuotes = JSON.stringify(allNotesObjects)
 			.replace(/"id":/g, "id:")
 			.replace(/"title":/g, "title:")
 			.replace(/"text":/g, "text:");
-		let query = `mutation {
+		const query = `mutation {
 					  insert_notes(
 						objects: 
 						  ${allNotesNoQuotes}
@@ -169,15 +172,24 @@ class App extends Component {
 		})
 		.then(res => res.json())
 		.then(res => console.log(res))
-		.catch(error => console.error(error))
+		.catch(error => console.error(error));
 	}
 
-	//
+	// Makes shallow copy of state.allNotes, deletes note from shallow copy,
+	// updates state.allNotes with shallow copy, and resets currentNote.
+	// Then deletes note from database.
 	deleteNote = () => {
-		// Make a shallow copy, delete it from shallow copy, change state to shallow copy
-		let currentId = this.state.currentNote.id;
-		delete this.state.allNotes[currentId];
-		this.setState({ currentNote: { id: null, title: "", text: "" }});
+		const allNotesUpdated = {...this.state.allNotes};
+		const currentId = this.state.currentNote.id;
+		delete allNotesUpdated[currentId];
+		this.setState({ 
+			currentNote: { 
+				id: null, 
+				title: "", 
+				text: "" 
+			},
+			allNotes: allNotesUpdated
+		});
 		fetch('https://noteworthy-graphql.herokuapp.com/v1/graphql', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -191,7 +203,7 @@ class App extends Component {
 		})
 		.then(res => res.json())
 		.then(res => console.log(res))
-		.catch(error => console.error(error))
+		.catch(error => console.error(error));
 	}
 
 	render() {
@@ -203,7 +215,7 @@ class App extends Component {
 					<Save saveChanges={ this.saveChanges } />
 					<Delete deleteNote={ this.deleteNote } />
 					<Titles renderTitles={ this.renderTitles() } selectNote={ this.selectNote } saveTitle={ this.saveTitle } />
-					<Note renderNote={ this.renderNote() } isNoteSelected={this.state.currentNote.id} saveTextArea={ this.saveTextArea } />
+					<Note renderNote={ this.renderNote() } saveTextArea={ this.saveTextArea } />
 				</div>
 			</div>
 		);
