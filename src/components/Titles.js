@@ -1,15 +1,25 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Titles extends Component {
-	render() {
-		return (
-			<div className="menu">
-				<ul className="list-items">
-					{ this.props.renderTitles }
-				</ul>
-			</div>
-		);
-	}
+// class Titles extends Component {
+// 	render() {
+// 		return (
+// 			<div className="menu">
+// 				<ul className="note-titles">
+// 					{ this.props.renderTitles }
+// 				</ul>
+// 			</div>
+// 		);
+// 	}
+// }
+
+const Titles = (props) => {
+	return (
+		<div className="menu">
+			<ul className="note-titles">
+				{ props.renderTitles }
+			</ul>
+		</div>
+	);
 }
 
 export default Titles;

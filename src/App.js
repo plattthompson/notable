@@ -34,58 +34,71 @@ class App extends Component {
 			return notes;
 		}, {}))
 		.then(notes => this.setState({ allNotes: notes }))
+		.catch(error => console.error(error))
+
+		// Timer for autosave every two minutes
+		this.autoSave = setInterval(this.saveChanges, 2 * 60 * 1000)
 	}
 
-	// Autosave every two minutes
-	// setInterval(saveChanges, 2 * 60 * 5000)
+	// Clearing autosave function in case of unmount
+	componentWillUnmount () {
+		clearInterval(this.autoSave)
+	}
 
+	// Dynamically renders titles from state
 	renderTitles = () => {
-		let titlesToBeRendered = Object.values(this.state.allNotes).map(note => 
-			<li onClick={ (event) => this.selectNote(event) } 
+		return ( Object.values(this.state.allNotes).map(note => 
+			<li onClick={ () => this.selectNote(note.id) } 
 				key={ note.id.toString() }>
 					<input onChange={ (event) => this.saveTitle(event) }
 						className="title-box"  
 						defaultValue={ note.title }
 						id={ note.id } />
 			</li>
-		);
-		return titlesToBeRendered;
+			)
+		)
 	}
 
-	renderNote = () => {
-		let displayCurrentNote = this.state.currentNote.text;
-		return displayCurrentNote;
-	}
-
-	selectNote = (event) => {
-		let selectedNoteId = event.target.id;
-		let updatedCurrentNote = this.state.allNotes[selectedNoteId];
+	// Updates state.currentNote upon selection of title
+	selectNote = (id) => {
+		let updatedCurrentNote = this.state.allNotes[id];
 		this.setState({ 
 			currentNote: updatedCurrentNote
 		});
 	}
 
-	saveTextArea = (event) => {
-		let currentNoteId = this.state.currentNote.id;
-		let currentNoteTitle = this.state.currentNote.title;
-		let currentText = event.target.value;
-		this.setState(prevState => ({ 
-			currentNote: { 
-				id: currentNoteId,
-				title: currentNoteTitle,
-				text: currentText
-			},
-			allNotes: {
-				...prevState.allNotes,
-				[currentNoteId]: {
-					id: currentNoteId,
-					title: currentNoteTitle,
-					text: currentText
-				}
-			}
-		}));
+	// Renders current note
+	renderNote = () => {
+		return this.state.currentNote.text;
 	}
 
+	// Saves note content to state upon change OR creates new note if a note hasn't been selected yet
+	saveTextArea = (event) => {
+		if (this.state.currentNote.id) {
+			let currentNoteId = this.state.currentNote.id;
+			let currentNoteTitle = this.state.currentNote.title;
+			let currentNoteText = event.target.value;
+			this.setState(prevState => ({ 
+				currentNote: { 
+					id: currentNoteId,
+					title: currentNoteTitle,
+					text: currentNoteText
+				},
+				allNotes: {
+					...prevState.allNotes,
+					[currentNoteId]: {
+						id: currentNoteId,
+						title: currentNoteTitle,
+						text: currentNoteText
+					}
+				}
+			}));
+		} else {
+			this.addNote();
+		}
+	}
+
+	// Saves note title to state upon change
 	saveTitle = (event) => {
 		let currentNoteId = this.state.currentNote.id;
 		let currentNoteTitle = event.target.value;
@@ -107,8 +120,11 @@ class App extends Component {
 		}));
 	}
 
+	// Makes shallow copy of state, creates a new note with a
+	// Unix timestamp as an ID, adds the new note to the shallow
+	// copy, and updates state with shallow copy
 	addNote = () => {
-		let getAllNotes = this.state.allNotes;
+		let getAllNotes = {...this.state.allNotes};
 		let id = Date.now();
 		let newNote = { id: id, title: "", text: "" };
 		getAllNotes[id] = newNote;
@@ -122,8 +138,9 @@ class App extends Component {
 		});
 	}
 
+	// 
 	saveChanges = () => {
-		let allNotesObjects = Object.values(this.state.allNotes);
+		let allNotesObjects = Object.values({...this.state.allNotes});
 		let allNotesNoQuotes = JSON.stringify(allNotesObjects)
 			.replace(/"id":/g, "id:")
 			.replace(/"title":/g, "title:")
@@ -151,10 +168,13 @@ class App extends Component {
 			body: JSON.stringify({ query })
 		})
 		.then(res => res.json())
-		.then(res => console.log( res ))
+		.then(res => console.log(res))
+		.catch(error => console.error(error))
 	}
 
+	//
 	deleteNote = () => {
+		// Make a shallow copy, delete it from shallow copy, change state to shallow copy
 		let currentId = this.state.currentNote.id;
 		delete this.state.allNotes[currentId];
 		this.setState({ currentNote: { id: null, title: "", text: "" }});
@@ -169,6 +189,9 @@ class App extends Component {
 						}`
 			})
 		})
+		.then(res => res.json())
+		.then(res => console.log(res))
+		.catch(error => console.error(error))
 	}
 
 	render() {
@@ -180,7 +203,7 @@ class App extends Component {
 					<Save saveChanges={ this.saveChanges } />
 					<Delete deleteNote={ this.deleteNote } />
 					<Titles renderTitles={ this.renderTitles() } selectNote={ this.selectNote } saveTitle={ this.saveTitle } />
-					<Note renderNote={ this.renderNote() } saveTextArea={ this.saveTextArea } />
+					<Note renderNote={ this.renderNote() } isNoteSelected={this.state.currentNote.id} saveTextArea={ this.saveTextArea } />
 				</div>
 			</div>
 		);
