@@ -125,7 +125,7 @@ class App extends Component {
 	// copy, and updates state with shallow copy
 	addNote = () => {
 		const getAllNotes = {...this.state.allNotes};
-		const id = Date.now();
+		const id = Math.floor(Math.random() * 10_000);
 		const newNote = { id: id, title: "", text: "" };
 		getAllNotes[id] = newNote;
 		this.setState({
